@@ -43,6 +43,7 @@
                 @foreach ($products as $product)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        {{-- <td>{{ ($products->currentPage() - 1) * $products->perPage() + $loop->iteration }}</td> --}}
                         <td><img src="/images/{{ $product->image }}" width="100px"></td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->detail }}</td>
