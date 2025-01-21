@@ -153,6 +153,9 @@ class ProductController extends Controller
         // Perform the search
         $products = Product::where('name', 'LIKE', "%{$query}%")
                            ->orWhere('product_id', 'LIKE', "%{$query}%")
+                        //    ->orWhere('price', 'LIKE', "%{$query}%")
+                            ->orWhere('price', '=', $query)
+                        
                            ->orWhere('detail', 'LIKE', "%{$query}%")
                            ->get();
     
