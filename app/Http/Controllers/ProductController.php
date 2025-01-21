@@ -59,7 +59,7 @@ class ProductController extends Controller
             $input = $request->all(); // শুধুমাত্র প্রয়োজনীয় ইনপুট
 
             // ইউনিক product_id তৈরি
-            $input['product_id'] = Str::slug($request->input('name')) . rand(1000, 9999);
+            $input['product_id'] = Str::slug($request->input('name')) ."-". rand(1000, 9999);
 
             // ইমেজ প্রসেসিং
             if ($image = $request->file('image')) {
