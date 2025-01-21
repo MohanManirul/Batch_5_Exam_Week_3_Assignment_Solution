@@ -2,8 +2,10 @@
     <tr>
         <td>{{ $loop->iteration }}</td>
         <td><img src="/images/{{ $product->image }}" width="100px"></td>
+        <td>{{ $product->product_id }}</td>
         <td>{{ $product->name }}</td>
         <td>{{ $product->detail }}</td>
+        <td>{{ $product->price }}</td>
         <td>
             <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                 <a class="btn btn-info btn-sm" href="{{ route('products.show', $product->id) }}"><i class="fa-solid fa-list"></i> Show</a>

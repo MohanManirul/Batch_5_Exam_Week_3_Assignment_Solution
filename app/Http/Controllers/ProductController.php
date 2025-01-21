@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\File;
-  
+use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     /**
@@ -46,29 +46,36 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'detail' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-    
-        $input = $request->all();
-    
-        if ($image = $request->file('image')) {
+  
 
-            $destinationPath = 'images/';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $input['image'] = "$profileImage";
+        public function store(Request $request)
+        {
+            $request->validate([
+                'name' => 'required|string',           
+                'price' => 'required|numeric|min:0',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+            $input = $request->all(); // শুধুমাত্র প্রয়োজনীয় ইনপুট
+
+            // ইউনিক product_id তৈরি
+            $input['product_id'] = Str::slug($request->input('name')) . rand(1000, 9999);
+
+            // ইমেজ প্রসেসিং
+            if ($image = $request->file('image')) {
+                $destinationPath = public_path('images/');
+                $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+                $image->move($destinationPath, $profileImage);
+                $input['image'] = "$profileImage";
+            }
+
+            // ডেটা সেভ করুন
+            Product::create($input);
+
+            return redirect()->route('products.index')
+                            ->with('success', 'Product created successfully.');
         }
-      
-        Product::create($input);
-       
-        return redirect()->route('products.index')
-                         ->with('success', 'Product created successfully.');
-    }
+
   
     /**
      * Display the specified resource.
@@ -145,6 +152,7 @@ class ProductController extends Controller
         
         // Perform the search
         $products = Product::where('name', 'LIKE', "%{$query}%")
+                           ->orWhere('product_id', 'LIKE', "%{$query}%")
                            ->orWhere('detail', 'LIKE', "%{$query}%")
                            ->get();
     

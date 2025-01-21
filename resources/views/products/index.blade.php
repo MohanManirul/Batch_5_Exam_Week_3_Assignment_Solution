@@ -22,6 +22,7 @@
                 <tr>
                     <th width="80px">No</th>
                     <th>Image</th>
+                    <th>Product ID</th>
                     <th>
                         <a href="{{ route('products.index', ['sortBy' => 'name', 'sort' => request('sort') == 'asc' ? 'desc' : 'asc']) }}">
                             Name
@@ -31,6 +32,13 @@
                     <th>
                         <a href="{{ route('products.index', ['sortBy' => 'detail', 'sort' => request('sort') == 'asc' ? 'desc' : 'asc']) }}">
                             Details
+                            <i class="fa {{ request('sortBy') == 'detail' && request('sort') == 'asc' ? 'fa-arrow-up' : 'fa-arrow-down' }}"></i>
+                        </a>
+                    </th>
+
+                    <th>
+                        <a href="{{ route('products.index', ['sortBy' => 'detail', 'sort' => request('sort') == 'asc' ? 'desc' : 'asc']) }}">
+                            Price
                             <i class="fa {{ request('sortBy') == 'detail' && request('sort') == 'asc' ? 'fa-arrow-up' : 'fa-arrow-down' }}"></i>
                         </a>
                     </th>
@@ -45,8 +53,10 @@
                         <td>{{ $loop->iteration }}</td>
                         {{-- <td>{{ ($products->currentPage() - 1) * $products->perPage() + $loop->iteration }}</td> --}}
                         <td><img src="/images/{{ $product->image }}" width="100px"></td>
+                        <td>{{ $product->product_id }}</td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->detail }}</td>
+                        <td>{{ $product->price }}</td>
                         <td>
                             <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                                 
