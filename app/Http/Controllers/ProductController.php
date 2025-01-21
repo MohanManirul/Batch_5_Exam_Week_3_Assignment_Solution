@@ -99,13 +99,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product): RedirectResponse
     {
+    
         $request->validate([
-            'name' => 'required',
-            'detail' => 'required'
+            'name' => 'required|string',           
+            'price' => 'required|numeric|min:0'           
         ]);
         
   
-  dd($product);
         $input = $request->all();
         
         if ($image = $request->file('image')) {

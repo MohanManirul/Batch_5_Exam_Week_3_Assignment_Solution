@@ -41,6 +41,36 @@
         </div>
 
         <div class="mb-3">
+            <label for="stock" class="form-label"><strong>Stock:</strong></label>
+            <input 
+                class="form-control @error('stock') is-invalid @enderror"
+                type="number"
+                value="{{ $product->stock }}"
+                min="1"                
+                name="stock" 
+                id="stock" 
+                placeholder="stock"></input>
+            @error('stock')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="price" class="form-label"><strong>Price:</strong></label>
+            <input 
+                class="form-control @error('price') is-invalid @enderror"
+                type="number"
+                value="{{ $product->price }}"
+                min="1"                
+                name="price" 
+                id="price" 
+                placeholder="price"></input>
+            @error('price')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
             <label for="inputImage" class="form-label"><strong>Image:</strong></label>
             <input 
                 type="file" 
