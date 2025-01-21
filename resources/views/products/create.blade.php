@@ -58,7 +58,7 @@
                 class="form-control @error('price') is-invalid @enderror"
                 type="number"
                 min="1"                
-                name="price" 
+                name="price"  
                 id="price" 
                 placeholder="price"></input>
             @error('price')

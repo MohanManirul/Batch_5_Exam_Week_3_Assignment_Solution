@@ -37,9 +37,9 @@
                     </th>
 
                     <th>
-                        <a href="{{ route('products.index', ['sortBy' => 'detail', 'sort' => request('sort') == 'asc' ? 'desc' : 'asc']) }}">
+                        <a href="{{ route('products.index', ['sortBy' => 'price', 'sort' => request('sort') == 'asc' ? 'desc' : 'asc']) }}">
                             Price
-                            <i class="fa {{ request('sortBy') == 'detail' && request('sort') == 'asc' ? 'fa-arrow-up' : 'fa-arrow-down' }}"></i>
+                            <i class="fa {{ request('sortBy') == 'price' && request('sort') == 'asc' ? 'fa-arrow-up' : 'fa-arrow-down' }}"></i>
                         </a>
                     </th>
                     <th width="250px">Action</th>
@@ -50,8 +50,8 @@
             <tbody>
                 @foreach ($products as $product)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        {{-- <td>{{ ($products->currentPage() - 1) * $products->perPage() + $loop->iteration }}</td> --}}
+                        {{-- <td>{{ $loop->iteration }}</td> --}}
+                        <td>{{ ($products->currentPage() - 1) * $products->perPage() + $loop->iteration }}</td>
                         <td><img src="/images/{{ $product->image }}" width="100px"></td>
                         <td>{{ $product->product_id }}</td>
                         <td>{{ $product->name }}</td>

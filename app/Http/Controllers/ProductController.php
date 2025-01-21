@@ -49,13 +49,14 @@ class ProductController extends Controller
   
 
         public function store(Request $request)
-        {
+        { 
             $request->validate([
                 'name' => 'required|string',           
                 'price' => 'required|numeric|min:0',
+                'stock' => 'required|numeric|min:0',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
-
+            
             $input = $request->all(); // শুধুমাত্র প্রয়োজনীয় ইনপুট
 
             // ইউনিক product_id তৈরি
@@ -80,7 +81,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product): View
+    public function show( Product $product ): View
     {
        
         return view('products.show', compact('product'));
@@ -90,7 +91,7 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit( Product $product ): View
-    {
+    {       
         return view('products.edit', compact('product'));
     }
   
@@ -102,7 +103,7 @@ class ProductController extends Controller
     
         $request->validate([
             'name' => 'required|string',           
-            'price' => 'required|numeric|min:0'           
+            'price' => 'required|numeric|min:0'                       
         ]);
         
   
@@ -153,6 +154,7 @@ class ProductController extends Controller
         // Perform the search
         $products = Product::where('name', 'LIKE', "%{$query}%")
                            ->orWhere('product_id', 'LIKE', "%{$query}%")
+                           
                         //    ->orWhere('price', 'LIKE', "%{$query}%")
                             ->orWhere('price', '=', $query)
                         
